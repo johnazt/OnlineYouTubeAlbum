@@ -1,47 +1,44 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div>
+    <h3 class="component-title">Añadir nuevo video</h3>
+    <div class="input-container">
+      <input class="input-container__input" placeholder="Añadir" type="text" />
+      <button class="input-container__button">Añadir</button>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+.component-title {
+  font-weight: 600;
+  line-height: 38px;
+  font-size: 1.3rem;
+  margin-bottom: 0.5em;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.input-container {
+  display: flex;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.input-container__input {
+  flex: 4;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px 0px 0px 5px;
+  padding: 0 1.5em;
+}
+.input-container__input::placeholder {
+  color: #929293;
+}
+.input-container__button {
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  background-color: #136ae4;
+  color: #fbfbfb;
+  padding: 12px 20px;
+  border: transparent;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 4px rgba(0, 0, 0, 0.12),
+    0px 2px 2px rgba(0, 0, 0, 0.14);
+  border-radius: 0px 10px 10px 0px;
+  cursor: pointer;
 }
 </style>
