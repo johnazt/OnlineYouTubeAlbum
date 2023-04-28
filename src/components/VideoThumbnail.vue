@@ -1,7 +1,9 @@
 <template>
   <ModalVideoDescription v-if="showModal" v-on="events" />
-  <div class="grid-item">
-    <h4 @click="showModal = true">Item</h4>
+  <div class="grid-item" @click="showModal = true">
+    <h4>Item</h4>
+    <span class="grid-item_time">0:45</span>
+    <button class="grid-item_button" @click="deleteItem($event)">X</button>
   </div>
 </template>
 
@@ -15,6 +17,11 @@ const events = {
   closeModal: () => (showModal.value = false)
 }
 
+const deleteItem = (event) => {
+  event.stopPropagation()
+  console.log('deleteItem')
+}
+
 defineComponent({
   components: {
     ModalVideoDescription
@@ -26,6 +33,32 @@ defineComponent({
 <style scoped>
 .grid-item {
   border: 1px solid blue;
+  height: 150px;
+  position: relative;
   cursor: pointer;
+  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.07);
+}
+.grid-item_button,
+.grid-item_time {
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  font-weight: bolder;
+  border-radius: 3px;
+}
+
+.grid-item_button {
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  border: transparent;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.grid-item_time {
+  bottom: 10px;
+  right: 10px;
+  padding: 0 5px;
 }
 </style>

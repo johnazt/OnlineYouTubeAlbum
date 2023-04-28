@@ -25,7 +25,7 @@ defineComponent({
 .grid-container {
   max-width: 990px;
   padding: 2em;
-  margin: 0 auto;
+  margin: 5em auto 0;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 2em;
