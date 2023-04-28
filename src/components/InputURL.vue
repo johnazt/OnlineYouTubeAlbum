@@ -2,9 +2,15 @@
   <h3 class="component-title">Añadir nuevo video</h3>
   <div class="input-container">
     <input class="input-container__input" placeholder="Añadir" type="text" />
-    <button class="input-container__button">Añadir</button>
+    <button class="input-container__button" @click="onAddVideo">Añadir</button>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  onAddVideo: Function
+})
+</script>
 
 <style scoped>
 .component-title {
