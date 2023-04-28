@@ -15,7 +15,6 @@ import VideoContainer from './components/VideoContainer.vue'
 <style>
 main {
   height: 100vh;
-  width: 100vw;
 }
 .container {
   max-width: 1096px;

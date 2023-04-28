@@ -1,10 +1,11 @@
 <template>
   <div class="overlay">
-    <div class="modal">
+    <div class="modal modal_delete">
       <p class="modal_question">¿Seguro que quieres eliminar este video?</p>
       <div class="modal_buttons">
-        <button @click="onShowDeleteModal">Cancelar</button>
-        <button>Eliminar</button>
+        <div class="spacer"></div>
+        <button class="modal_btn btn_cancel" @click="onShowDeleteModal">Cancelar</button>
+        <button class="modal_btn btn_delete">Eliminar</button>
       </div>
       <span class="modal_close-button" @click="onShowDeleteModal">X</span>
     </div>
@@ -19,32 +20,53 @@ defineProps({
 </script>
 
 <style scoped>
-.overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(2, 2, 2, 0.5);
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.modal_question {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+  margin: 1.5em;
 }
-.modal {
-  width: 550px;
-  background-color: #fbfbfb;
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.07);
-  border-radius: 15px;
-  padding: 2em 1em;
-  position: relative;
+.modal_buttons {
   display: flex;
-  flex-direction: column;
+  column-gap: 1em;
+}
+.modal_btn {
+  flex: 1;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  padding: 12px 20px;
+  border: transparent;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 4px rgba(0, 0, 0, 0.12),
+    0px 2px 2px rgba(0, 0, 0, 0.14);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn_cancel {
+  background-color: #fbfbfb;
+  color: #136ae4;
+  border: 1px solid #136ae4;
+}
+.btn_delete {
+  background-color: #136ae4;
+  color: #fbfbfb;
 }
 .modal_close-button {
   position: absolute;
   top: 1em;
   right: 1em;
+  font-size: large;
+  font-weight: 600;
   cursor: pointer;
+}
+@media screen and (min-width: 750px) {
+  .modal_delete {
+    min-width: 750px;
+    padding: 1.5em 2.5em;
+  }
+  .spacer,
+  .btn_cancel,
+  .btn_delete {
+    flex: 1;
+  }
 }
 </style>

@@ -15,6 +15,7 @@
 }
 .input-container {
   display: flex;
+  padding: 0 1em;
 }
 .input-container__input {
   flex: 4;

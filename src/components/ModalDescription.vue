@@ -1,16 +1,23 @@
 <template>
   <div class="overlay">
-    <div class="modal">
-      <div class="modal_video">
-        <img src="#" alt="" />
-        <span>square img</span>
-      </div>
+    <div class="modal modal-video">
+      <iframe
+        maxWidth="400"
+        height="300"
+        class="modal_link"
+        src="https://www.youtube.com/embed/g0NFIxYqWpg"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+
       <div class="modal_description">
-        <h4>Title</h4>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis corrupti voluptatem
-          eum incidunt. Sequi, facilis?
-        </p>
+        <div>
+          <h3 class="modal_description-title">Title</h3>
+          <p class="modal_description-text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis corrupti voluptatem
+            eum incidunt. Sequi, facilis?
+          </p>
+        </div>
       </div>
       <span class="modal_close-button" @click="onCloseModal">X</span>
     </div>
@@ -21,38 +28,31 @@
 defineProps({
   onCloseModal: Function
 })
+//
 </script>
 
 <style scoped>
-.overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(2, 2, 2, 0.5);
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+.modal-video {
+  max-width: 1000px;
+  padding: 3em 2.5em;
+  column-gap: 1em;
 }
-.modal {
-  width: 550px;
-  background-color: #fbfbfb;
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.07);
-  border-radius: 15px;
-  padding: 2em 1em;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-.modal_video,
+.modal_link,
 .modal_description {
   flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.modal_description-title {
+  font-weight: 600;
+  margin-bottom: 1em;
 }
 .modal_close-button {
   position: absolute;
-  top: 1em;
+  top: 10px;
+  font-size: x-large;
+  font-weight: 600;
   right: 1em;
   cursor: pointer;
 }

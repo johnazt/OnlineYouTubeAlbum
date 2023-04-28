@@ -2,7 +2,6 @@
   <ModalDescription v-if="showModal" v-on="events" />
   <ModalDelete v-if="deleteVideo" v-on="events" />
   <div class="grid-item" @click="showModal = true">
-    <h4>Item</h4>
     <span class="grid-item_time">0:45</span>
     <button class="grid-item_button" @click="deleteItem($event)">X</button>
   </div>
