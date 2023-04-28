@@ -1,7 +1,9 @@
 <template>
   <main>
-    <VideoContainer />
-    <InputURL />
+    <div class="container">
+      <InputURL />
+      <VideoContainer />
+    </div>
   </main>
 </template>
 
@@ -10,7 +12,7 @@ import InputURL from './components/InputURL.vue'
 import VideoContainer from './components/VideoContainer.vue'
 </script>
 
-<style scoped>
+<style>
 main {
   height: 100vh;
   width: 100vw;

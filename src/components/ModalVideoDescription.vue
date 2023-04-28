@@ -12,14 +12,20 @@
           eum incidunt. Sequi, facilis?
         </p>
       </div>
-      <span class="modal_close-button">X</span>
+      <span class="modal_close-button" @click="onCloseModal">X</span>
     </div>
   </div>
 </template>
 
+<script setup>
+defineProps({
+  onCloseModal: Function
+})
+</script>
+
 <style scoped>
 .overlay {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(2, 2, 2, 0.5);
@@ -28,7 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 1000;
 }
 .modal {
   width: 550px;
@@ -40,9 +46,7 @@
   display: flex;
   flex-direction: column;
 }
-.modal_video {
-  flex: 1;
-}
+.modal_video,
 .modal_description {
   flex: 1;
 }
@@ -50,6 +54,7 @@
   position: absolute;
   top: 1em;
   right: 1em;
+  cursor: pointer;
 }
 @media screen and (min-width: 750px) {
   .modal {

@@ -1,20 +1,14 @@
 <template>
-  <div class="container">
-    <h3 class="component-title">Añadir nuevo video</h3>
-    <div class="input-container">
-      <input class="input-container__input" placeholder="Añadir" type="text" />
-      <button class="input-container__button">Añadir</button>
-    </div>
+  <h3 class="component-title">Añadir nuevo video</h3>
+  <div class="input-container">
+    <input class="input-container__input" placeholder="Añadir" type="text" />
+    <button class="input-container__button">Añadir</button>
   </div>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
-.container {
-  max-width: 1096px;
-  padding: 6em 1em;
-  margin: 0 auto;
-}
+
 .component-title {
   font-weight: 600;
   line-height: 38px;
