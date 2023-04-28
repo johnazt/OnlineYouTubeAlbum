@@ -1,15 +1,50 @@
 <template>
   <h3 class="component-title">Añadir nuevo video</h3>
   <div class="input-container">
-    <input class="input-container__input" placeholder="Añadir" type="text" />
-    <button class="input-container__button" @click="onAddVideo">Añadir</button>
+    <input class="input-container__input" placeholder="Añadir" type="text" v-model="videoLink" />
+    <button class="input-container__button" @click="addVideo">Añadir</button>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  onAddVideo: Function
-})
+import { ref } from 'vue'
+import axios from 'axios'
+
+const API_KEY = import.meta.env.VITE_API_KEY_YT
+const videoLink = ref('')
+
+const extractVideoId = (link) => {
+  const regex =
+    /(?:youtube(?:-nocookie)?\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/|y2u\.be\/)([a-zA-Z0-9_-]{11})/
+  const match = link.match(regex)
+
+  if (match && match[1]) {
+    return match[1]
+  } else {
+    console.error('Enlace de YouTube no válido')
+    return null
+  }
+}
+
+const addVideo = () => {
+  const videoId = extractVideoId(videoLink.value)
+  if (videoId) {
+    addVideoCollection(videoId)
+  }
+}
+
+const addVideoCollection = (videoId) => {
+  axios
+    .get(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
+    )
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
 </script>
 
 <style scoped>
