@@ -1,5 +1,6 @@
 <template>
-  <ModalVideoDescription v-if="showModal" v-on="events" />
+  <ModalDescription v-if="showModal" v-on="events" />
+  <ModalDelete v-if="deleteVideo" v-on="events" />
   <div class="grid-item" @click="showModal = true">
     <h4>Item</h4>
     <span class="grid-item_time">0:45</span>
@@ -8,23 +9,26 @@
 </template>
 
 <script setup>
-import ModalVideoDescription from './ModalVideoDescription.vue'
+import ModalDescription from './ModalDescription.vue'
+import ModalDelete from './ModalDelete.vue'
 import { defineComponent, ref } from 'vue'
 
 const showModal = ref(false)
+const deleteVideo = ref(false)
 
 const events = {
-  closeModal: () => (showModal.value = false)
+  closeModal: () => (showModal.value = false),
+  showDeleteModal: () => (deleteVideo.value = false)
 }
 
 const deleteItem = (event) => {
   event.stopPropagation()
-  console.log('deleteItem')
+  deleteVideo.value = true
 }
 
 defineComponent({
   components: {
-    ModalVideoDescription
+    ModalDescription
   }
 })
 //
