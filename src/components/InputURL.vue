@@ -15,12 +15,19 @@
 <script setup>
 import VideoContainer from './VideoContainer.vue'
 import videoService from '../services/videoService'
-import { provide, ref } from 'vue'
+import { onMounted, provide, ref } from 'vue'
 
 const videoLink = ref('')
 const videos = ref([])
 
 provide('videos', videos)
+
+onMounted(() => {
+  const storedVideos = localStorage.getItem('videos')
+  if (storedVideos) {
+    videos.value = JSON.parse(storedVideos)
+  }
+})
 
 const addVideo = async () => {
   const videoId = await videoService.extractVideoId(videoLink.value)
@@ -38,6 +45,7 @@ const addVideoCollection = async (videoId) => {
   try {
     const video = await videoService.getVideoDetails(videoId)
     videos.value.push(video)
+    localStorage.setItem('videos', JSON.stringify(videos.value))
   } catch (error) {
     console.error(error)
   }

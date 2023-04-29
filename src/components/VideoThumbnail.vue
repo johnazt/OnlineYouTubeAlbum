@@ -33,12 +33,8 @@ const updateVideos = (updatedVideos) => {
 }
 
 const openModal = (video) => {
-  onShowModal()
+  showModal.value = true
   videoItem.value = video
-}
-
-const onShowModal = () => {
-  return (showModal.value = true)
 }
 
 const events = {
