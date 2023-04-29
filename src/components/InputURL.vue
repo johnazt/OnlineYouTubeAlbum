@@ -9,74 +9,23 @@
 
 <script setup>
 import VideoContainer from './VideoContainer.vue'
+import videoService from '../services/videoService'
 import { ref } from 'vue'
-import axios from 'axios'
 
-const API_KEY = import.meta.env.VITE_API_KEY_YT
 const videoLink = ref('')
 const videos = ref([])
 
-const extractVideoId = (link) => {
-  const regex =
-    /(?:youtube(?:-nocookie)?\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/|y2u\.be\/)([a-zA-Z0-9_-]{11})/
-  const match = link.match(regex)
-
-  if (match && match[1]) {
-    return match[1]
-  } else {
-    console.error('Enlace de YouTube no válido')
-    return null
-  }
-}
-
 const addVideo = () => {
-  const videoId = extractVideoId(videoLink.value)
+  const videoId = videoService.extractVideoId(videoLink.value)
   if (videoId) {
     addVideoCollection(videoId)
   }
 }
 
 const addVideoCollection = (videoId) => {
-  axios
-    .get(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
-    )
-    .then((response) => {
-      const videoData = response.data.items[0].snippet
-      const idVideo = response.data.items[0].id
-      const duration = response.data.items[0].contentDetails.duration
-
-      const convertDuration = (duration) => {
-        const match = duration.match(/PT(\d+)M(\d+)S/)
-
-        if (match && match.length === 3) {
-          const minutes = parseInt(match[1])
-          const seconds = parseInt(match[2])
-          return { minutes, seconds }
-        }
-        return null
-      }
-
-      const convertedDuration = convertDuration(duration)
-
-      const MAX_DESCRIPTION_LENGTH = 250
-      const truncateDescription = (description) => {
-        if (description.length <= MAX_DESCRIPTION_LENGTH) {
-          return description
-        } else {
-          const truncatedText = description.substring(0, MAX_DESCRIPTION_LENGTH)
-          const lastSpaceIndex = truncatedText.lastIndexOf(' ')
-          return truncatedText.substring(0, lastSpaceIndex) + '...'
-        }
-      }
-
-      const video = {
-        id: idVideo,
-        title: videoData.title,
-        description: truncateDescription(videoData.description),
-        duration: `${convertedDuration.minutes}:${convertedDuration.seconds}`,
-        thumbnails: videoData.thumbnails.high.url
-      }
+  videoService
+    .getVideoDetails(videoId)
+    .then((video) => {
       videos.value.push(video)
     })
     .catch((error) => {
