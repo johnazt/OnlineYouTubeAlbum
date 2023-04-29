@@ -67,8 +67,8 @@ const getVideoDetails = async (videoId) => {
 }
 
 //COMPRUEBA SI EL VIDEO YA EXISTE EN EL ARRAY 
-const existingVideo = (videos, videoId) => {
-  return videos.value.find((video) => video.id === videoId)
+const existingVideo = (collection, docId) => {
+  return collection.value.find(video => video.videoID === docId)
 }
 
 export default {

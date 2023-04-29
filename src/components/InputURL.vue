@@ -15,19 +15,13 @@
 <script setup>
 import VideoContainer from './VideoContainer.vue'
 import videoService from '../services/videoService'
-import { onMounted, provide, ref } from 'vue'
+import { ref } from 'vue'
+import { collection, addDoc } from 'firebase/firestore'
+import { useFirestore, useCollection } from 'vuefire'
 
+const db = useFirestore()
+const videosYT = useCollection(collection(db, 'videosYT'))
 const videoLink = ref('')
-const videos = ref([])
-
-provide('videos', videos)
-
-onMounted(() => {
-  const storedVideos = localStorage.getItem('videos')
-  if (storedVideos) {
-    videos.value = JSON.parse(storedVideos)
-  }
-})
 
 const addVideo = async () => {
   const videoId = await videoService.extractVideoId(videoLink.value)
@@ -37,15 +31,22 @@ const addVideo = async () => {
   videoLink.value = ''
 }
 
-const addVideoCollection = async (videoId) => {
-  if (videoService.existingVideo(videos, videoId)) {
+const addVideoCollection = async (videoID) => {
+  if (videoService.existingVideo(videosYT, videoID)) {
     console.log('El video ya existe en la lista.')
     return
   }
   try {
-    const video = await videoService.getVideoDetails(videoId)
-    videos.value.push(video)
-    localStorage.setItem('videos', JSON.stringify(videos.value))
+    const video = await videoService.getVideoDetails(videoID)
+    const docRef = await addDoc(collection(db, 'videosYT'), {
+      id: video.id,
+      videoID: video.id,
+      description: video.description,
+      duration: video.duration,
+      thumbnails: video.thumbnails,
+      title: video.title
+    })
+    return docRef
   } catch (error) {
     console.error(error)
   }

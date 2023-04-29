@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div v-for="video in videos" :key="video.id">
+  <div v-for="video in videosYT" :key="video.id">
     <ModalDescription v-if="showModal" v-on="events" />
     <ModalDelete v-if="deleteVideo" v-on="events" :updateVideos="updateVideos" />
     <div
@@ -8,6 +8,7 @@
       @click="openModal(video)"
       :style="{ 'background-image': `url(${video.thumbnails})` }"
     >
+      <h2>{{ video.title }}</h2>
       <span class="grid-item_time">{{ video?.duration }}</span>
       <button class="grid-item_button" @click="deleteItem($event, video.id)">X</button>
     </div>
@@ -18,6 +19,12 @@
 import ModalDescription from './ModalDescription.vue'
 import ModalDelete from './ModalDelete.vue'
 import { defineComponent, inject, ref, provide } from 'vue'
+
+import { useFirestore, useCollection } from 'vuefire'
+import { collection } from 'firebase/firestore'
+
+const db = useFirestore()
+const videosYT = useCollection(collection(db, 'videosYT'))
 
 const showModal = ref(false)
 const deleteVideo = ref(false)
