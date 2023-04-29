@@ -1,8 +1,8 @@
-import  InputURL from './InputURL.vue';
+import  URLInputField from './URLInputField.vue';
 import  {ModalDescription, ModalDelete}  from './modals';
 import  VideoContainer from './VideoContainer.vue';
 import  VideoThumbnail from './VideoThumbnail.vue';
 
 export {
-  InputURL, ModalDelete, ModalDescription, VideoContainer, VideoThumbnail
+  URLInputField, ModalDelete, ModalDescription, VideoContainer, VideoThumbnail
 }

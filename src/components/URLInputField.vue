@@ -43,6 +43,7 @@ const showDuplicateModal = ref(false)
 const invalidURL = ref(false)
 const showSuccessMessage = ref(false)
 
+// OBTIENE ID DE LINK INGRESADO Y PASA COMO
 const addVideo = async () => {
   const videoId = await videoService.extractVideoId(videoLink.value)
   if (videoId) {
@@ -56,6 +57,7 @@ const addVideo = async () => {
   videoLink.value = ''
 }
 
+// AGREGA NUEVO ELEMENTO A LA LISTA DE VIDEOS
 const addVideoCollection = async (videoID) => {
   if (videoService.existingVideo(videosYT, videoID)) {
     showDuplicateModal.value = true
@@ -152,7 +154,6 @@ const addVideoCollection = async (videoID) => {
   height: 300px;
   margin: 0 auto;
 }
-
 .success-message {
   position: absolute;
   top: 50px;
@@ -165,7 +166,6 @@ const addVideoCollection = async (videoID) => {
   opacity: 0;
   animation: fade-in 3s ease-in-out forwards;
 }
-
 .emoji {
   position: absolute;
   top: 200px;
@@ -175,7 +175,6 @@ const addVideoCollection = async (videoID) => {
   font-size: 78px;
   animation: bounce 3s ease-in-out infinite;
 }
-
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -184,7 +183,6 @@ const addVideoCollection = async (videoID) => {
     opacity: 1;
   }
 }
-
 @keyframes bounce {
   0% {
     transform: translate(-50%, -50%);

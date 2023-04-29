@@ -1,15 +1,14 @@
 <template>
   <main>
     <div class="container">
-      <InputURL />
+      <URLInputField />
       <VideoContainer />
     </div>
   </main>
 </template>
 
 <script setup>
-import InputURL from './components/InputURL.vue'
-import { VideoContainer } from './components'
+import { VideoContainer, URLInputField } from './components'
 </script>
 
 <style>
