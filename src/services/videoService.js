@@ -3,6 +3,20 @@ import axios from 'axios'
 const API_KEY = import.meta.env.VITE_API_KEY_YT
 const MAX_DESCRIPTION_LENGTH = 250
 
+// OBTIENE ID DE LINK QUE SE INGRESA EN EL INPUT
+const extractVideoId = (link) => {
+  const regex =
+    /(?:youtube(?:-nocookie)?\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/|y2u\.be\/)([a-zA-Z0-9_-]{11})/
+  const match = link.match(regex);
+
+  if (match && match[1]) {
+    return match[1]
+  } else {
+    console.error('Enlace de YouTube no válido')
+    return null
+  }
+}
+
 // CONVIERTE DURATION A FORMATO DE MINUTOS Y SEGUNDOS
 const convertDuration = (duration) => {
   const match = duration.match(/PT(\d+)M(\d+)S/)
@@ -52,19 +66,7 @@ const getVideoDetails = async (videoId) => {
   }
 }
 
-// OBTIENE ID DE LINK QUE SE INGRESA EN EL INPUT
-const extractVideoId = (link) => {
-  const regex =
-    /(?:youtube(?:-nocookie)?\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/|y2u\.be\/)([a-zA-Z0-9_-]{11})/
-  const match = link.match(regex);
 
-  if (match && match[1]) {
-    return match[1]
-  } else {
-    console.error('Enlace de YouTube no válido')
-    return null
-  }
-}
 
 export default {
   getVideoDetails,

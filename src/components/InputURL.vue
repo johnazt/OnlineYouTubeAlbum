@@ -25,6 +25,7 @@ const addVideo = () => {
   if (videoId) {
     addVideoCollection(videoId)
   }
+  videoLink.value = ''
 }
 
 const addVideoCollection = (videoId) => {

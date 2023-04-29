@@ -5,15 +5,15 @@
         maxWidth="400"
         height="300"
         class="modal_link"
-        :src="`https://www.youtube.com/embed/${video.id}`"
+        :src="`https://www.youtube.com/embed/${props.videoId}`"
         frameborder="0"
         allowfullscreen
       ></iframe>
 
       <div class="modal_description">
         <div>
-          <h3 class="modal_description-title">{{ video.title }}</h3>
-          <p class="modal_description-text">{{ video.description }}</p>
+          <h3 class="modal_description-title">{{ props.videoTitle }}</h3>
+          <p class="modal_description-text">{{ props.description }}</p>
         </div>
       </div>
       <span class="modal_close-button" @click="onCloseModal">X</span>
@@ -22,17 +22,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 //
 
 const props = defineProps({
   onCloseModal: Function,
-  video: {
-    type: Object
+  videoTitle: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  videoId: {
+    type: String
   }
 })
-
-const video = ref(props.video)
 </script>
 
 <style scoped>

@@ -1,10 +1,22 @@
 <template>
-  <div v-for="video in videos" :key="video.id">
-    <ModalDescription v-if="showModal" v-on="events" :video="video" />
-    <ModalDelete v-if="deleteVideo" v-on="events" :videos="videos" :video="video" />
+  <div v-for="(video, index) in videos" :key="index">
+    <ModalDescription
+      v-if="showModal"
+      v-on="events"
+      :videoId="video.id"
+      :videoTitle="video.title"
+      :description="video.description"
+    />
+    <ModalDelete
+      v-if="deleteVideo"
+      v-on="events"
+      :videos="videos"
+      :video="video"
+      :updateVideos="updateVideos"
+    />
     <div
       class="grid-item"
-      @click="showModal = true"
+      @click="onShowModal"
       :style="{ 'background-image': `url(${video.thumbnails})` }"
     >
       <span class="grid-item_time">{{ video?.duration }}</span>
@@ -27,6 +39,14 @@ const props = defineProps({
     default: () => []
   }
 })
+
+const updateVideos = (updatedVideos) => {
+  videos.value = updatedVideos
+}
+
+const onShowModal = () => {
+  return (showModal.value = true)
+}
 
 const videos = ref(props.videos)
 
