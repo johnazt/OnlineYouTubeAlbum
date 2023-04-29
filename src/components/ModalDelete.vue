@@ -5,7 +5,7 @@
       <div class="modal_buttons">
         <div class="spacer"></div>
         <button class="modal_btn btn_cancel" @click="onShowDeleteModal">Cancelar</button>
-        <button class="modal_btn btn_delete">Eliminar</button>
+        <button class="modal_btn btn_delete" @click="deleteVideo(video.id)">Eliminar</button>
       </div>
       <span class="modal_close-button" @click="onShowDeleteModal">X</span>
     </div>
@@ -13,9 +13,32 @@
 </template>
 
 <script setup>
-defineProps({
-  onShowDeleteModal: Function
+import { ref } from 'vue'
+
+const props = defineProps({
+  onShowDeleteModal: {
+    type: Function,
+    required: true
+  },
+  videos: {
+    type: Array,
+    default: () => []
+  },
+  video: {
+    type: Object
+  }
 })
+
+const deleteVideo = (id) => {
+  const index = videos.value.findIndex((video) => video.id === id)
+  if (index !== -1) {
+    videos.value.splice(index, 1)
+  }
+  props.onShowDeleteModal()
+}
+
+const videos = ref(props.videos)
+const video = ref(props.video)
 //
 </script>
 

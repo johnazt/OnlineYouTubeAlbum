@@ -1,7 +1,12 @@
 <template>
   <h3 class="component-title">Añadir nuevo video</h3>
   <div class="input-container">
-    <input class="input-container__input" placeholder="Añadir" type="text" v-model="videoLink" />
+    <input
+      class="input-container__input"
+      placeholder="Añadir URL"
+      type="text"
+      v-model="videoLink"
+    />
     <button class="input-container__button" @click="addVideo">Añadir</button>
   </div>
   <VideoContainer :videos="videos" />

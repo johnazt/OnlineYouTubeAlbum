@@ -1,13 +1,15 @@
 <template>
-  <ModalDescription v-if="showModal" v-on="events" :video="video" />
-  <ModalDelete v-if="deleteVideo" v-on="events" />
-  <div
-    class="grid-item"
-    @click="showModal = true"
-    :style="{ 'background-image': `url(${video.thumbnails})` }"
-  >
-    <span class="grid-item_time">{{ video?.duration }}</span>
-    <button class="grid-item_button" @click="deleteItem($event)">X</button>
+  <div v-for="video in videos" :key="video.id">
+    <ModalDescription v-if="showModal" v-on="events" :video="video" />
+    <ModalDelete v-if="deleteVideo" v-on="events" :videos="videos" :video="video" />
+    <div
+      class="grid-item"
+      @click="showModal = true"
+      :style="{ 'background-image': `url(${video.thumbnails})` }"
+    >
+      <span class="grid-item_time">{{ video?.duration }}</span>
+      <button class="grid-item_button" @click="deleteItem($event)">X</button>
+    </div>
   </div>
 </template>
 
@@ -20,12 +22,13 @@ const showModal = ref(false)
 const deleteVideo = ref(false)
 
 const props = defineProps({
-  video: {
-    type: Object
+  videos: {
+    type: Array,
+    default: () => []
   }
 })
 
-const video = ref(props.video)
+const videos = ref(props.videos)
 
 const events = {
   closeModal: () => (showModal.value = false),

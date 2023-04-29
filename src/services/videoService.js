@@ -9,7 +9,7 @@ const convertDuration = (duration) => {
 
   if (match && match.length === 3) {
     const minutes = parseInt(match[1])
-    const seconds = parseInt(match[2])
+    const seconds = parseInt(match[2]).toString().padStart(2, '0');
     return { minutes, seconds }
   }
   return null

@@ -1,6 +1,6 @@
 <template>
   <div class="grid-container">
-    <VideoThumbnail v-for="video in videos" :key="video.id" :video="video" />
+    <VideoThumbnail :videos="videos" />
   </div>
 </template>
 
