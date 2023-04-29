@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="modal modal-video">
       <a
-        :href="`https://www.youtube.com/watch?v=${videoItem.id}`"
+        :href="`https://www.youtube.com/watch?v=${videoItem.videoID}`"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -23,11 +23,11 @@
 <script setup>
 import { inject } from 'vue'
 
+const videoItem = inject('video')
+
 defineProps({
   onCloseModal: Function
 })
-
-const videoItem = inject('video')
 </script>
 
 <style scoped>

@@ -9,11 +9,14 @@
     />
     <button class="input-container__button" @click="addVideo">Añadir</button>
   </div>
-  <VideoContainer />
+  <transition name="message-duplicated">
+    <div class="message-duplicated" v-if="showDuplicateModal">
+      El video ya existe en la colección 🎬😆...
+    </div>
+  </transition>
 </template>
 
 <script setup>
-import VideoContainer from './VideoContainer.vue'
 import videoService from '../services/videoService'
 import { ref } from 'vue'
 import { collection, addDoc } from 'firebase/firestore'
@@ -22,6 +25,7 @@ import { useFirestore, useCollection } from 'vuefire'
 const db = useFirestore()
 const videosYT = useCollection(collection(db, 'videosYT'))
 const videoLink = ref('')
+const showDuplicateModal = ref(false)
 
 const addVideo = async () => {
   const videoId = await videoService.extractVideoId(videoLink.value)
@@ -33,7 +37,10 @@ const addVideo = async () => {
 
 const addVideoCollection = async (videoID) => {
   if (videoService.existingVideo(videosYT, videoID)) {
-    console.log('El video ya existe en la lista.')
+    showDuplicateModal.value = true
+    setTimeout(() => {
+      showDuplicateModal.value = false
+    }, 1000)
     return
   }
   try {
@@ -62,6 +69,7 @@ const addVideoCollection = async (videoID) => {
 }
 .input-container {
   display: flex;
+  position: relative;
 }
 .input-container__input {
   flex: 4;
@@ -84,5 +92,24 @@ const addVideoCollection = async (videoID) => {
     0px 2px 2px rgba(0, 0, 0, 0.14);
   border-radius: 0px 10px 10px 0px;
   cursor: pointer;
+}
+.message-duplicated {
+  font-size: large;
+  font-weight: 600;
+  font-style: italic;
+  padding-top: 2em;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 170px;
+  left: 20px;
+}
+
+.message-duplicated-enter-active {
+  opacity: 1;
+}
+
+.message-duplicated-leave-active {
+  opacity: 0;
 }
 </style>

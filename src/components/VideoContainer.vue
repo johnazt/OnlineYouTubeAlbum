@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import VideoThumbnail from '@/components/VideoThumbnail.vue'
+import { VideoThumbnail } from '@/components'
 import { defineComponent } from 'vue'
 
 defineComponent({
@@ -13,8 +13,6 @@ defineComponent({
     VideoThumbnail
   }
 })
-
-//
 </script>
 
 <style>
@@ -27,7 +25,6 @@ defineComponent({
   grid-gap: 2em;
   text-align: center;
 }
-
 @media screen and (min-width: 550px) {
   .grid-container {
     grid-template-columns: repeat(2, 1fr);

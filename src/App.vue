@@ -2,12 +2,14 @@
   <main>
     <div class="container">
       <InputURL />
+      <VideoContainer />
     </div>
   </main>
 </template>
 
 <script setup>
 import InputURL from './components/InputURL.vue'
+import { VideoContainer } from './components'
 </script>
 
 <style>

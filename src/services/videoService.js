@@ -19,13 +19,20 @@ const extractVideoId = (link) => {
 
 // CONVIERTE DURATION A FORMATO DE MINUTOS Y SEGUNDOS
 const convertDuration = (duration) => {
-  const match = duration.match(/PT(\d+)M(\d+)S/)
+  const match = duration.match(/PT((\d+)H)?((\d+)M)?((\d+)S)?/)
 
-  if (match && match.length === 3) {
-    const minutes = parseInt(match[1])
-    const seconds = parseInt(match[2]).toString().padStart(2, '0');
-    return { minutes, seconds }
+  if (match) {
+    const hours = match[2] ? parseInt(match[2]) : 0
+    const minutes = match[4] ? parseInt(match[4]) : 0
+    const seconds = match[6] ? parseInt(match[6]) : 0
+
+    return {
+      hours,
+      minutes,
+      seconds: seconds.toString().padStart(2, '0')
+    }
   }
+
   return null
 }
 
@@ -48,13 +55,20 @@ const getVideoDetails = async (videoId) => {
     )
     const videoData = response.data.items[0].snippet
     const idVideo = response.data.items[0].id
-    const duration = response.data.items[0].contentDetails.duration
+    let duration = response.data.items[0].contentDetails.duration
+
     const convertedDuration = convertDuration(duration)
+
+    if (convertedDuration?.hours) {
+      duration = `${convertedDuration.hours}:${convertedDuration.minutes}:${convertedDuration.seconds}`
+    } else {
+      duration = `${convertedDuration?.minutes}:${convertedDuration?.seconds}`
+    }
 
     const video = {
       id: idVideo,
       title: videoData.title,
-      duration: `${convertedDuration?.minutes}:${convertedDuration?.seconds}`,
+      duration,
       description: truncateDescription(videoData.description),
       thumbnails: videoData.thumbnails.high.url
     }
@@ -66,9 +80,9 @@ const getVideoDetails = async (videoId) => {
   }
 }
 
-//COMPRUEBA SI EL VIDEO YA EXISTE EN EL ARRAY 
+//COMPRUEBA SI EL VIDEO YA EXISTE EN EL ARRAY
 const existingVideo = (collection, docId) => {
-  return collection.value.find(video => video.videoID === docId)
+  return collection.value.find((video) => video.videoID === docId)
 }
 
 export default {

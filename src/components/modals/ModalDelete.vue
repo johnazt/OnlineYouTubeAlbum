@@ -14,30 +14,23 @@
 
 <script setup>
 import { inject } from 'vue'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { useFirestore } from 'vuefire'
+
+const db = useFirestore()
+const videoID = inject('id')
 
 const props = defineProps({
   onShowDeleteModal: {
     type: Function,
     required: true
-  },
-  updateVideos: {
-    type: Function,
-    required: true
   }
 })
 
-const videos = inject('videos')
-const videoID = inject('id')
-
-const deleteVideo = (id) => {
-  const index = videos.value.findIndex((vid) => vid.id === id)
-  if (index !== -1) {
-    const updatedVideos = [...videos.value.slice(0, index), ...videos.value.slice(index + 1)]
-    props.updateVideos(updatedVideos)
-  }
+const deleteVideo = async (videoID) => {
+  await deleteDoc(doc(db, 'videosYT', videoID))
   props.onShowDeleteModal()
 }
-//
 </script>
 
 <style scoped>
