@@ -147,6 +147,7 @@ const addVideoCollection = async (videoID) => {
   text-align: center;
 }
 .message-invalid_text {
+  color: var(--vt-c-black-soft);
   font-weight: 600;
   font-size: xx-large;
 }
