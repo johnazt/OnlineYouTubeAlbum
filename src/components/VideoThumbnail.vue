@@ -1,8 +1,12 @@
 <template>
-  <ModalDescription v-if="showModal" v-on="events" />
+  <ModalDescription v-if="showModal" v-on="events" :video="video" />
   <ModalDelete v-if="deleteVideo" v-on="events" />
-  <div class="grid-item" @click="showModal = true">
-    <span class="grid-item_time">0:45</span>
+  <div
+    class="grid-item"
+    @click="showModal = true"
+    :style="{ 'background-image': `url(${video.thumbnails})` }"
+  >
+    <span class="grid-item_time">{{ video?.duration }}</span>
     <button class="grid-item_button" @click="deleteItem($event)">X</button>
   </div>
 </template>
@@ -10,11 +14,18 @@
 <script setup>
 import ModalDescription from './ModalDescription.vue'
 import ModalDelete from './ModalDelete.vue'
-
 import { defineComponent, ref } from 'vue'
 
 const showModal = ref(false)
 const deleteVideo = ref(false)
+
+const props = defineProps({
+  video: {
+    type: Object
+  }
+})
+
+const video = ref(props.video)
 
 const events = {
   closeModal: () => (showModal.value = false),
@@ -36,6 +47,9 @@ defineComponent({
 
 <style scoped>
 .grid-item {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   border: 1px solid blue;
   height: 150px;
   position: relative;

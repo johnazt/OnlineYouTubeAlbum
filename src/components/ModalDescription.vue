@@ -5,18 +5,15 @@
         maxWidth="400"
         height="300"
         class="modal_link"
-        src="https://www.youtube.com/embed/g0NFIxYqWpg"
+        :src="`https://www.youtube.com/embed/${video.id}`"
         frameborder="0"
         allowfullscreen
       ></iframe>
 
       <div class="modal_description">
         <div>
-          <h3 class="modal_description-title">Title</h3>
-          <p class="modal_description-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis corrupti voluptatem
-            eum incidunt. Sequi, facilis?
-          </p>
+          <h3 class="modal_description-title">{{ video.title }}</h3>
+          <p class="modal_description-text">{{ video.description }}</p>
         </div>
       </div>
       <span class="modal_close-button" @click="onCloseModal">X</span>
@@ -25,10 +22,17 @@
 </template>
 
 <script setup>
-defineProps({
-  onCloseModal: Function
-})
+import { ref } from 'vue'
 //
+
+const props = defineProps({
+  onCloseModal: Function,
+  video: {
+    type: Object
+  }
+})
+
+const video = ref(props.video)
 </script>
 
 <style scoped>
