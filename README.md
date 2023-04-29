@@ -1,14 +1,14 @@
-# Online YouTube Album con Vue3 - Composition API
+# 🟢 Online YouTube Album con Vue3 - Composition API
 
 Esta aplicación es un álbum online de videos de YouTube construido con Vue 3, utilizando Google Cloud y Composition API.
 
 Permite a los usuarios pegar enlaces de videos de YouTube y ver una colección de videos guardados. La aplicación muestra miniaturas de los videos, junto con información adicional, y ofrece funcionalidades para reproducir en YouTube y eliminar videos.
 
-[![home-online-yt-app.png](https://i.postimg.cc/VNrbcZv1/home-online-yt-app.png)](https://postimg.cc/DWhzrg1Y)
+![Home-page-app](https://i.postimg.cc/VNrbcZv1/home-online-yt-app.png)
 
-[![add-Video-online-yt-app.png](https://i.postimg.cc/BQpF51RW/add-Video-online-yt-app.png)](https://postimg.cc/WhDtTt2S)
+![add-new-video](https://i.postimg.cc/BQpF51RW/add-Video-online-yt-app.png)
 
-[![description-Video-online-yt-app.png](https://i.postimg.cc/MpGQ9p8n/description-Video-online-yt-app.png)](https://postimg.cc/HVfnxHnm)
+![description-video](https://i.postimg.cc/MpGQ9p8n/description-Video-online-yt-app.png)
 
 ## 🎬 Puedes ver la aplicación desplegada [aquí](https://filmfinder-page.vercel.app/)
 
