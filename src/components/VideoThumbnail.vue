@@ -1,17 +1,11 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div v-for="(video, index) in videos" :key="index">
-    <ModalDescription
-      v-if="showModal"
-      v-on="events"
-      :videoId="video.id"
-      :videoTitle="video.title"
-      :description="video.description"
-    />
-    <ModalDelete v-if="deleteVideo" v-on="events" :video="video" :updateVideos="updateVideos" />
+  <div v-for="video in videos" :key="video.id">
+    <ModalDescription v-if="showModal" v-on="events" />
+    <ModalDelete v-if="deleteVideo" v-on="events" :updateVideos="updateVideos" />
     <div
       class="grid-item"
-      @click="onShowModal"
+      @click="openModal(video)"
       :style="{ 'background-image': `url(${video.thumbnails})` }"
     >
       <span class="grid-item_time">{{ video?.duration }}</span>
@@ -23,14 +17,24 @@
 <script setup>
 import ModalDescription from './ModalDescription.vue'
 import ModalDelete from './ModalDelete.vue'
-import { defineComponent, inject, ref } from 'vue'
+import { defineComponent, inject, ref, provide } from 'vue'
 
 const showModal = ref(false)
 const deleteVideo = ref(false)
+const videoID = ref('')
+const videoItem = ref({})
 
+provide('video', videoItem)
+provide('id', videoID)
 const videos = inject('videos')
+
 const updateVideos = (updatedVideos) => {
   videos.value = updatedVideos
+}
+
+const openModal = (video) => {
+  onShowModal()
+  videoItem.value = video
 }
 
 const onShowModal = () => {
@@ -43,9 +47,8 @@ const events = {
 }
 
 const deleteItem = (event, id) => {
-  console.log(id)
   event.stopPropagation()
-  events.showDeleteModal(id)
+  videoID.value = id
   deleteVideo.value = true
 }
 
@@ -62,8 +65,7 @@ defineComponent({
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  border: 1px solid blue;
-  height: 150px;
+  min-height: 200px;
   position: relative;
   cursor: pointer;
   box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.07);

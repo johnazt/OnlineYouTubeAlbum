@@ -5,7 +5,7 @@
       <div class="modal_buttons">
         <div class="spacer"></div>
         <button class="modal_btn btn_cancel" @click="onShowDeleteModal">Cancelar</button>
-        <button class="modal_btn btn_delete" @click="deleteVideo(props.video.id)">Eliminar</button>
+        <button class="modal_btn btn_delete" @click="deleteVideo(videoID)">Eliminar</button>
       </div>
       <span class="modal_close-button" @click="onShowDeleteModal">X</span>
     </div>
@@ -20,20 +20,14 @@ const props = defineProps({
     type: Function,
     required: true
   },
-  video: {
-    type: Object
-  },
   updateVideos: {
-    type: Function, // Asegúrate de que el tipo sea el correcto
-    required: true // Opcionalmente, puedes ajustar la configuración requerida
+    type: Function,
+    required: true
   }
 })
 
 const videos = inject('videos')
-
-// const deleteItem = (id) => {
-//   console.log(id)
-// }
+const videoID = inject('id')
 
 const deleteVideo = (id) => {
   const index = videos.value.findIndex((vid) => vid.id === id)

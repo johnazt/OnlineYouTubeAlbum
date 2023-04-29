@@ -1,19 +1,18 @@
 <template>
   <div class="overlay">
     <div class="modal modal-video">
-      <iframe
-        maxWidth="400"
-        height="300"
-        class="modal_link"
-        :src="`https://www.youtube.com/embed/${props.videoId}`"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
+      <a
+        :href="`https://www.youtube.com/watch?v=${videoItem.id}`"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img class="modal_image" :src="videoItem.thumbnails" alt="Video Thumbnail" />
+      </a>
 
       <div class="modal_description">
         <div>
-          <h3 class="modal_description-title">{{ props.videoTitle }}</h3>
-          <p class="modal_description-text">{{ props.description }}</p>
+          <h3 class="modal_description-title">{{ videoItem.title }}</h3>
+          <p class="modal_description-text">{{ videoItem.description }}</p>
         </div>
       </div>
       <span class="modal_close-button" @click="onCloseModal">X</span>
@@ -22,23 +21,19 @@
 </template>
 
 <script setup>
-//
+import { inject } from 'vue'
 
-const props = defineProps({
-  onCloseModal: Function,
-  videoTitle: {
-    type: String
-  },
-  description: {
-    type: String
-  },
-  videoId: {
-    type: String
-  }
+defineProps({
+  onCloseModal: Function
 })
+
+const videoItem = inject('video')
 </script>
 
 <style scoped>
+.modal_image {
+  max-width: 100%;
+}
 .modal-video {
   max-width: 1000px;
   padding: 3em 2.5em;
@@ -63,7 +58,7 @@ const props = defineProps({
   right: 1em;
   cursor: pointer;
 }
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 850px) {
   .modal {
     flex-direction: row;
   }

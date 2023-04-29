@@ -54,7 +54,7 @@ const getVideoDetails = async (videoId) => {
     const video = {
       id: idVideo,
       title: videoData.title,
-      duration: `${convertedDuration.minutes}:${convertedDuration.seconds}`,
+      duration: `${convertedDuration?.minutes}:${convertedDuration?.seconds}`,
       description: truncateDescription(videoData.description),
       thumbnails: videoData.thumbnails.high.url
     }
