@@ -28,7 +28,7 @@ const convertDuration = (duration) => {
 
     return {
       hours,
-      minutes,
+      minutes: minutes.toString().padStart(2, '0'),
       seconds: seconds.toString().padStart(2, '0')
     }
   }

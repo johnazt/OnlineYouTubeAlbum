@@ -9,11 +9,25 @@
     />
     <button class="input-container__button" @click="addVideo">Añadir</button>
   </div>
-  <transition name="message-duplicated">
+  <transition name="transition">
     <div class="message-duplicated" v-if="showDuplicateModal">
       El video ya existe en la colección 🎬😆...
     </div>
   </transition>
+  <transition name="transition">
+    <div v-if="invalidURL" class="message-duplicated message-invalid">
+      <h3 class="message-invalid_text">Enlace inválido</h3>
+      <img
+        class="message-invalid_img"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Achtung.svg/1024px-Achtung.svg.png"
+        alt="image-invalid"
+      />
+    </div>
+  </transition>
+  <div v-if="showSuccessMessage">
+    <div class="success-message">Video agregado 🎉</div>
+    <div class="emoji">😄</div>
+  </div>
 </template>
 
 <script setup>
@@ -26,11 +40,18 @@ const db = useFirestore()
 const videosYT = useCollection(collection(db, 'videosYT'))
 const videoLink = ref('')
 const showDuplicateModal = ref(false)
+const invalidURL = ref(false)
+const showSuccessMessage = ref(false)
 
 const addVideo = async () => {
   const videoId = await videoService.extractVideoId(videoLink.value)
   if (videoId) {
     addVideoCollection(videoId)
+  } else {
+    invalidURL.value = true
+    setTimeout(() => {
+      invalidURL.value = false
+    }, 1000)
   }
   videoLink.value = ''
 }
@@ -53,6 +74,10 @@ const addVideoCollection = async (videoID) => {
       thumbnails: video.thumbnails,
       title: video.title
     })
+    showSuccessMessage.value = true
+    setTimeout(() => {
+      showSuccessMessage.value = false
+    }, 3000)
     return docRef
   } catch (error) {
     console.error(error)
@@ -99,17 +124,76 @@ const addVideoCollection = async (videoID) => {
   font-style: italic;
   padding-top: 2em;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 1.3s ease-in-out;
   position: absolute;
   top: 170px;
   left: 20px;
 }
-
-.message-duplicated-enter-active {
+.transition-enter-active {
   opacity: 1;
 }
-
-.message-duplicated-leave-active {
+.transition-leave-active {
   opacity: 0;
+}
+.message-invalid {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  text-align: center;
+}
+.message-invalid_text {
+  font-weight: 600;
+  font-size: xx-large;
+}
+.message-invalid_img {
+  height: 300px;
+  margin: 0 auto;
+}
+
+.success-message {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  font-weight: bold;
+  z-index: 1000;
+  color: green;
+  opacity: 0;
+  animation: fade-in 3s ease-in-out forwards;
+}
+
+.emoji {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  font-size: 78px;
+  animation: bounce 3s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
 }
 </style>
