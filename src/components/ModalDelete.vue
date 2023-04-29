@@ -13,14 +13,12 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
+
 const props = defineProps({
   onShowDeleteModal: {
     type: Function,
     required: true
-  },
-  videos: {
-    type: Array,
-    default: () => []
   },
   video: {
     type: Object
@@ -31,10 +29,16 @@ const props = defineProps({
   }
 })
 
+const videos = inject('videos')
+
+// const deleteItem = (id) => {
+//   console.log(id)
+// }
+
 const deleteVideo = (id) => {
-  const index = props.videos.findIndex((vid) => vid.id === id)
+  const index = videos.value.findIndex((vid) => vid.id === id)
   if (index !== -1) {
-    const updatedVideos = [...props.videos.slice(0, index), ...props.videos.slice(index + 1)]
+    const updatedVideos = [...videos.value.slice(0, index), ...videos.value.slice(index + 1)]
     props.updateVideos(updatedVideos)
   }
   props.onShowDeleteModal()

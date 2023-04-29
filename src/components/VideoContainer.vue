@@ -1,27 +1,18 @@
 <template>
   <div class="grid-container">
-    <VideoThumbnail :videos="videos" />
+    <VideoThumbnail />
   </div>
 </template>
 
 <script setup>
 import VideoThumbnail from '@/components/VideoThumbnail.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 defineComponent({
   components: {
     VideoThumbnail
   }
 })
-
-const props = defineProps({
-  videos: {
-    type: Array,
-    default: () => []
-  }
-})
-
-const videos = ref(props.videos)
 
 //
 </script>

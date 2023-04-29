@@ -7,7 +7,7 @@ const MAX_DESCRIPTION_LENGTH = 250
 const extractVideoId = (link) => {
   const regex =
     /(?:youtube(?:-nocookie)?\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/|y2u\.be\/)([a-zA-Z0-9_-]{11})/
-  const match = link.match(regex);
+  const match = link.match(regex)
 
   if (match && match[1]) {
     return match[1]
@@ -66,9 +66,13 @@ const getVideoDetails = async (videoId) => {
   }
 }
 
-
+//COMPRUEBA SI EL VIDEO YA EXISTE EN EL ARRAY 
+const existingVideo = (videos, videoId) => {
+  return videos.value.find((video) => video.id === videoId)
+}
 
 export default {
   getVideoDetails,
-  extractVideoId
+  extractVideoId,
+  existingVideo
 }

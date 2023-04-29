@@ -9,34 +9,38 @@
     />
     <button class="input-container__button" @click="addVideo">Añadir</button>
   </div>
-  <VideoContainer :videos="videos" />
+  <VideoContainer />
 </template>
 
 <script setup>
 import VideoContainer from './VideoContainer.vue'
 import videoService from '../services/videoService'
-import { ref } from 'vue'
+import { provide, ref } from 'vue'
 
 const videoLink = ref('')
 const videos = ref([])
 
-const addVideo = () => {
-  const videoId = videoService.extractVideoId(videoLink.value)
+provide('videos', videos)
+
+const addVideo = async () => {
+  const videoId = await videoService.extractVideoId(videoLink.value)
   if (videoId) {
     addVideoCollection(videoId)
   }
   videoLink.value = ''
 }
 
-const addVideoCollection = (videoId) => {
-  videoService
-    .getVideoDetails(videoId)
-    .then((video) => {
-      videos.value.push(video)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+const addVideoCollection = async (videoId) => {
+  if (videoService.existingVideo(videos, videoId)) {
+    console.log('El video ya existe en la lista.')
+    return
+  }
+  try {
+    const video = await videoService.getVideoDetails(videoId)
+    videos.value.push(video)
+  } catch (error) {
+    console.error(error)
+  }
 }
 </script>
 
